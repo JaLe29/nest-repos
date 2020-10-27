@@ -15,14 +15,14 @@ import { promisify } from 'util';
 const readFileAsync = promisify(readFile);
 
 @Injectable()
-export class TasksService extends GenericService<TaskEntity, any, any, any>  {
+export class TasksService {
 
   constructor(
-    @InjectRepository(TaskEntity)
-    taskRepository: Repository<TaskEntity>,
+    // @InjectRepository(TaskEntity)
+    // taskRepository: Repository<TaskEntity>,
   ) {
-    super(
-      taskRepository,
-    )
+    // super(
+    //   taskRepository,
+    // )
   }
 }

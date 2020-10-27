@@ -8,7 +8,7 @@ import { TasksService } from './tasks.service'
 @Module({
   imports: [
     PublisherModule,
-    TypeOrmModule.forFeature([TaskEntity]),
+    // TypeOrmModule.forFeature([TaskEntity]),
   ],
   providers: [TasksService],
   exports: [TasksService],

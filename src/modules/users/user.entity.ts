@@ -6,7 +6,4 @@ export class UserEntity extends GenericEntity {
 
   @Column({ length: 100 })
   email: string;
-
-  @Column({ length: 100 })
-  password: string;
 }
