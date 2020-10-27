@@ -1,14 +1,11 @@
 
 import { Module } from '@nestjs/common'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { PublisherModule } from 'modules/core/publisher/publisher.module'
-import { TaskEntity } from './task.entity'
+import { ContextModule } from 'modules/core/context/context.module'
 import { TasksService } from './tasks.service'
 
 @Module({
   imports: [
-    PublisherModule,
-    // TypeOrmModule.forFeature([TaskEntity]),
+    ContextModule,
   ],
   providers: [TasksService],
   exports: [TasksService],

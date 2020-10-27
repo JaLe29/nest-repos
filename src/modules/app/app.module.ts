@@ -7,11 +7,13 @@ import { SchedulerModule } from 'modules/core/scheduler/scheduler.module';
 import { ENV_DB } from 'const/env';
 import { ServeStaticModule } from '@nestjs/serve-static'
 import path from 'path'
+import { ContextModule } from 'modules/core/context/context.module';
 
 @Module({
   imports: [
     GraphqlModule,
     SchedulerModule,
+    ContextModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       url: ENV_DB,

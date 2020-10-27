@@ -1,44 +1,26 @@
-import { Repository } from 'typeorm';
-import { PaginationArgs } from 'global/args/PaginationArgs';
-import { DeleteResultDto } from 'global/database/DeleteResult.dto';
-import { UpdateResultDto } from 'global/database/UpdateResult.dto';
+import { Inject } from '@nestjs/common'
+import { REQUEST } from '@nestjs/core'
+import { basename } from 'path'
+import { getCustomRepository, Repository } from 'typeorm'
+import { ContextService } from '../context/context.service'
 
-export class GenericService<Entity, CreateDto, EditDto, WhereDto> {
+export class GenericService {
+
+  // TODO LEPSI JMENO, nejlepe pojmenovat jako to z ceho se dedi, nebo to necpat sem
+  serviceRepository: any
 
   constructor(
-    protected readonly repository: Repository<Entity>,
-  ) { }
+    baseName: string,
+    ctxId: string,
+    contextService: ContextService,
+    repository,
+  ) {
+    console.log('constructor GenericService - ' + baseName)
 
-  public findOne(where: WhereDto | any): Promise<Entity | undefined> {
-    const options = {
-      where,
-    };
-    return this.repository.findOne(options);
+    this.serviceRepository = getCustomRepository(repository)
+    this.serviceRepository.setContextService(contextService)
+    this.serviceRepository.setContextId(ctxId)
   }
 
-  public findAll(where: WhereDto | any /* order?: { [P in keyof Entity]?: 'ASC' | 'DESC' } */, pagination?: PaginationArgs): Promise<Entity[]> {
-    const options: any = {
-      where,
-      ...(pagination && {
-        offset: pagination.offset,
-        take: pagination.limit,
-      }),
-      order: { createdAt: 'DESC' },
-    };
-
-    return this.repository.find(options);
-  }
-
-  public update(where: WhereDto, data: EditDto): Promise<UpdateResultDto> {
-    return this.repository.update(where, data) as Promise<UpdateResultDto>;
-  }
-
-  public delete(id: number): Promise<DeleteResultDto> {
-    return this.repository.delete(id) as Promise<DeleteResultDto>;
-  }
-
-  public createOne(data: CreateDto & any): Promise<Entity> {
-    return this.repository.save(data);
-  }
 
 }

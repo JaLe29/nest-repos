@@ -25,8 +25,9 @@ export class UsersResolver extends GenericResolver(
   }
 
   @Query(() => Boolean)
-
-  public test() {
+  public test(@Context() ctx) {
+    console.log(ctx.req.headers['server-side-dc-id'])
+    // (request as any).req.headers['server-side-dc-id']
     return this.usersService.test()
   }
 }

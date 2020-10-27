@@ -1,28 +1,27 @@
 
-import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
+import { Inject, Injectable, Scope } from '@nestjs/common'
 import { GenericService } from 'modules/core/generic/generic.service'
-import { Repository } from 'typeorm'
-import { TaskEntity } from './task.entity'
-import { readFile, unlinkSync, } from 'fs';
-import { v4 as uuidv4 } from 'uuid';
-// @ts-ignore
-import shell from 'shelljs';
-// @ts-ignore
-import { IgApiClient } from 'instagram-private-api';
-import { PublisherService } from 'modules/core/publisher/publisher.service'
-import { promisify } from 'util';
-const readFileAsync = promisify(readFile);
+import { TasksRepository } from './tasks.repository'
+import { ContextService } from 'modules/core/context/context.service'
+import { REQUEST } from '@nestjs/core'
 
-@Injectable()
-export class TasksService {
+@Injectable({ scope: Scope.REQUEST })
+export class TasksService extends GenericService  {
 
   constructor(
-    // @InjectRepository(TaskEntity)
-    // taskRepository: Repository<TaskEntity>,
+    @Inject(REQUEST) request: Request,
+    readonly contextService: ContextService,
   ) {
-    // super(
-    //   taskRepository,
-    // )
+    super(
+      'Task',
+      (request as any).req.headers['server-side-dc-id'],
+      contextService,
+      TasksRepository,
+    )
+  }
+
+  async test() {
+    await this.serviceRepository.test()
+    return true
   }
 }
