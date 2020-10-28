@@ -30,6 +30,9 @@ export class UsersRepository extends GenericRepository<UserEntity> {
   }
 
   async createUser(email: string) {
+    console.log('UsersRepository potrebuji master: ' + !!this.getContextService().getContext(this.ctxId).forceMaster)
+    // ok udelali jsme zapis a ted potrebujeme vsude vedet ze musime pouzivat vzdy master
+    this.getContextService().updateContext(this.getCtxId(), 'forceMaster', true)
     return this.save({ email })
   }
 

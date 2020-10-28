@@ -23,6 +23,7 @@ export class TasksRepository extends GenericRepository<TaskEntity> {
   }
 
   createTask(text: string) {
+    console.log('TasksRepository potrebuji master: ' + !!this.getContextService().getContext(this.ctxId).forceMaster)
     return this.save({ text })
   }
 

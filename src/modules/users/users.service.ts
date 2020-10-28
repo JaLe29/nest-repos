@@ -37,10 +37,19 @@ export class UsersService extends GenericService {
 
     await getManager().transaction(async transactionalEntityManager => {
       const email = `transakce-${new Date().getTime()}fake-email`
-      await transactionalEntityManager.getCustomRepository(UsersRepository).createUser(email)
+
+      const userRepository = transactionalEntityManager.getCustomRepository(UsersRepository)
+      userRepository.setContextService(this.contextService)
+      userRepository.setContextId(this.contextId)
+      await userRepository.createUser(email)
 
       const text = `transakce-${new Date().getTime()}fake-text`
-      await transactionalEntityManager.getCustomRepository(TasksRepository).createTask(text)
+
+      const tasksRepository = transactionalEntityManager.getCustomRepository(TasksRepository)
+      tasksRepository.setContextService(this.contextService)
+      tasksRepository.setContextId(this.contextId)
+
+      await tasksRepository.createTask(text)
 
       throw new Error('😈')
     })
