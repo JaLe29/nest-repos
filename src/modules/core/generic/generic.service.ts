@@ -1,7 +1,4 @@
-import { Inject } from '@nestjs/common'
-import { REQUEST } from '@nestjs/core'
-import { basename } from 'path'
-import { getCustomRepository, Repository } from 'typeorm'
+import { getCustomRepository } from 'typeorm'
 import { ContextService } from '../context/context.service'
 
 export class GenericService {

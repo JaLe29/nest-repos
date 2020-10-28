@@ -29,4 +29,8 @@ export class UsersRepository extends GenericRepository<UserEntity> {
     console.log(r)
   }
 
+  async createUser(email: string) {
+    return this.save({ email })
+  }
+
 }
